@@ -59,10 +59,14 @@ async function request(path, options = {}) {
             detail = data?.detail || null;
         }
 
+        if (res.status === 502 || res.status == 504 && !detail) {
+            throw new ApiError('Upstream unavailable', 'network', 504);
+        }
+
         if (res.status >= 500) {
-            // Standard server down 500 error
             throw new ApiError(detail || 'Server error', 'server', res.status);
         }
+
         if (res.status === 422) {
             // This error is for our FastAPI/Pydantic validation failure which in most
             // cases will be the length cap for the input.
