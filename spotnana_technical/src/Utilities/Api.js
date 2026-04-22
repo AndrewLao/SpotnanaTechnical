@@ -14,6 +14,8 @@ export class ApiError extends Error {
 }
 
 // Error messages for the user in the event of an API error
+// Right now, it's a bit difficult to check them all because you'll need 
+// to intentionally trigger it with test code
 const FRIENDLY_MESSAGES = {
     network: "Can't reach the server. Check your connection or try again in a moment.",
     timeout: 'That took too long. The server might be busy — please try again.',
